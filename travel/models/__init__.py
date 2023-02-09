@@ -1,1 +1,1 @@
-from . import property_details
+from . import place_details

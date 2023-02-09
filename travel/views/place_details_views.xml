@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="place_details_action" model="ir.actions.act_window">
+    <field name="name">Places</field>
+    <field name="res_model">place.details</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No records yet
+            </p>
+    </field>
+</record>
+
+
+<record id="place_details_view_tree" model="ir.ui.view">
+   <field name="name">place.details.tree</field>
+   <field name="model">place.details</field>
+   <field name="arch" type="xml">
+        <tree string="Places">
+           <field name="name"/>
+           <field name="country" />
+           <field name="state" />
+           <field name="no_of_guests" />
+           <field name="bedrooms" />
+           <field name="rent"/>
+        </tree>
+    </field>
+</record>
+
+<record id="place_details_view_form" model="ir.ui.view">
+    <field name="name">place.details.form</field>
+    <field name="model">place.details</field>
+    <field name="arch" type="xml">
+        <form>
+        <sheet>
+            <div class="oe_title">
+              <h1><field name="name" /></h1>
+            </div>
+            <group>
+              <group>
+               <field name="country"/>
+              </group>
+              <group>
+                <field name="state"/>
+              </group>
+            </group>
+            
+            
+            <notebook>
+                <page string="Description">
+                   <group>
+                     <field name="description"/>
+                   </group>
+                </page>
+                <page string="Basic Information">
+                   <group>
+                     <field name="beds"/>
+                     <field name="bedrooms" />
+                     <field name="bathrooms"/>
+                     <field name="no_of_guests"/>
+                     <field name="rent"/>
+                   </group>
+                </page>
+                <page string="Facilites">
+                   <group>
+                      <field name="swim_pool"/>
+                      <field name="wifi"/>
+                      <field name="tv"/>
+                      <field name="cooking"/>
+                      <field name="washer"/>
+                    
+                   </group>
+                </page>
+            </notebook>
+            
+        </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="place_details_view_search" model="ir.ui.view">
+    <field name="name">place.details.search</field>
+    <field name="model">place.details</field>
+    <field name="arch" type="xml">
+        <search >
+           <field name="country"/>
+           <field name="state"/>
+           <field name="bedrooms"/>
+           <field name="bathrooms"/>
+        </search>
+    </field>
+</record>
+
+</odoo>

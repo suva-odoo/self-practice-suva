@@ -9,10 +9,15 @@
     'description': """
     Description text
     """,
-        
-     
 
-    'application': True
+    'data': [
+        "security/ir.model.access.csv",
+        "views/place_details_views.xml",
+        "views/place_menus.xml"
+       
+    ],
+    
+    'application':True
 
 
 }
