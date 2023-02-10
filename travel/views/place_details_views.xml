@@ -53,13 +53,15 @@
                    </group>
                 </page>
                 <page string="Basic Information">
+                  <group col='3'>
                    <group>
-                     <field name="beds"/>
-                     <field name="bedrooms" />
-                     <field name="bathrooms"/>
-                     <field name="no_of_guests"/>
+                     <field name="beds" options='{"type":"number","step":1}'/>
+                     <field name="bedrooms" options='{"type":"number","step":1}'/>
+                     <field name="bathrooms" options='{"type":"number","step":1}'/>
+                     <field name="no_of_guests" options='{"type":"number","step":1}'/>
                      <field name="rent"/>
                    </group>
+                  </group>
                 </page>
                 <page string="Facilites">
                    <group>
@@ -68,7 +70,12 @@
                       <field name="tv"/>
                       <field name="cooking"/>
                       <field name="washer"/>
-                    
+                   </group>
+                </page>
+                <page string="About Host">
+                   <group>
+                     <field name="host_name"/>
+                     <field name="host_email"/>
                    </group>
                 </page>
             </notebook>

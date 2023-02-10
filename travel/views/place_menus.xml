@@ -2,11 +2,16 @@
 <odoo>
 
 <menuitem id="place_details_menu_root" name="Travel-Hospitality">
-   <menuitem id="places_menu" name="Places">
+   <menuitem id="profile_menu" sequence="0" name="Users">
+       <menuitem id="host_menu_action" action="host_details_action"/>
+   </menuitem>
+
+   <menuitem id="places_menu" sequence="1" name="Places">
        <menuitem id="place_details_menu_action" action="place_details_action" />
    </menuitem>
+
+   <menuitem id="travel_booking_menu" sequence="2" name="Bookings" action="travel_booking_action" />
+
 </menuitem>
-
-
 
 </odoo>

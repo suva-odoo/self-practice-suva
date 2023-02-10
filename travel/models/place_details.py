@@ -5,6 +5,8 @@ class PlaceDetails(models.Model):
     _description="Place Details"
 
     name=fields.Char(required=True)
+    host_name=fields.Char()
+    host_email=fields.Char()
     description=fields.Text()
     country=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
     state=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
@@ -21,7 +23,7 @@ class PlaceDetails(models.Model):
     cooking=fields.Boolean(string="Cooking")
     washer=fields.Boolean(string="Washing")
     
- 
+    
 
   
     @api.onchange('country')

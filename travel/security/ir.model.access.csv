@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+travel.access_host_details,access_host_details,travel.model_host_details,base.group_user,1,1,1,1
 travel.access_place_details,access_place_details,travel.model_place_details,base.group_user,1,1,1,1
+travel.access_travel_booking,access_travel_booking,travel.model_travel_booking,base.group_user,1,1,1,1
+
+

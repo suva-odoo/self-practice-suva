@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+<record id="travel_booking_action" model="ir.actions.act_window">
+    <field name="res_model">travel.booking</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+</odoo>
