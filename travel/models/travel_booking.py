@@ -6,7 +6,7 @@ class TravelBooking(models.Model):
 
     country=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
     state=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
-
+    places=fields.Many2one('place.details',string="S")
 
     @api.onchange('country')
     def set_values_to(self):
@@ -15,4 +15,5 @@ class TravelBooking(models.Model):
             return{
                 'domain':{'state':[('id','in',ids.ids)],}
             }
+
    

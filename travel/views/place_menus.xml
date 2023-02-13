@@ -12,6 +12,9 @@
 
    <menuitem id="travel_booking_menu" sequence="2" name="Bookings" action="travel_booking_action" />
 
+   <menuitem id="travel_transport_menu" sequence="3" name="Transportation" action="travel_transport_action"/>
+
+
 </menuitem>
 
 </odoo>

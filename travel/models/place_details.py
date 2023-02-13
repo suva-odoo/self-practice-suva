@@ -10,7 +10,8 @@ class PlaceDetails(models.Model):
     description=fields.Text()
     country=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
     state=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
-    
+    city=fields.Char(string="City",help="Enter City",required="True")
+    landmark=fields.Char(string="Any Landmark")
     rent=fields.Integer()
     beds=fields.Integer(string="Beds")
     bedrooms=fields.Integer(string='Bedrooms')
@@ -22,17 +23,32 @@ class PlaceDetails(models.Model):
     tv=fields.Boolean(string="TV")
     cooking=fields.Boolean(string="Cooking")
     washer=fields.Boolean(string="Washing")
+    booked_from=fields.Date()
+    booked_to=fields.Date()
+    add_vehicle_lines=fields.One2many('test.b','connect_test_b',string="Select Vehicle")
+    
+    class TestB(models.Model):
+        _name="test.b"
+        _description="Transportation"
+        connect_test_b=fields.Many2one('place.details',string="Connect")
+        vehicle_name=fields.Many2one('travel.transport',string="Select vehicle")
+        capacity=fields.Integer(string="Capacity",related="vehicle_name.capacity")
+        rent=fields.Float(string="Rent",related="vehicle_name.rent")
+     
     
     
-
+    
+  
   
     @api.onchange('country')
     def set_values_to(self):
         if self.country:
-            ids=self.env['res.country.state'].search([('country_id','=',self.country.id)])
-            return{
-                'domain':{'state':[('id','in',ids.ids)],}
-            }
+            return { 'domain':{'state':[('country_id','=',self.country.id)]}}
+        else:
+            return {'domain':{'state':[]}}
+
+
+
    
 
 
