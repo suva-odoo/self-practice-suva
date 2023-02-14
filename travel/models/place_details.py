@@ -1,4 +1,7 @@
 from odoo import models,fields,api
+from datetime import datetime,date
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.exceptions import UserError
 
 class PlaceDetails(models.Model):
     _name="place.details"
@@ -8,8 +11,8 @@ class PlaceDetails(models.Model):
     host_name=fields.Char()
     host_email=fields.Char()
     description=fields.Text()
-    country=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
-    state=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
+    country_id=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
+    state_id=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
     city=fields.Char(string="City",help="Enter City",required="True")
     landmark=fields.Char(string="Any Landmark")
     rent=fields.Integer()
@@ -25,27 +28,38 @@ class PlaceDetails(models.Model):
     washer=fields.Boolean(string="Washing")
     booked_from=fields.Date()
     booked_to=fields.Date()
-    add_vehicle_lines=fields.One2many('test.b','connect_test_b',string="Select Vehicle")
+    add_vehicle_line_ids=fields.One2many('travel.transport','vehicle_id',string="Select vehicle")
     
-    class TestB(models.Model):
-        _name="test.b"
-        _description="Transportation"
-        connect_test_b=fields.Many2one('place.details',string="Connect")
-        vehicle_name=fields.Many2one('travel.transport',string="Select vehicle")
-        capacity=fields.Integer(string="Capacity",related="vehicle_name.capacity")
-        rent=fields.Float(string="Rent",related="vehicle_name.rent")
-     
+
+    @api.onchange('booked_from')
+    def compute_booked_from(self):
+        if datetime.strptime(str(self.booked_from),DEFAULT_SERVER_DATE_FORMAT).date() <datetime.now().date():
+           self.booked_from = False
+           return {'warning': {
+                    'title': "Warning",
+                    'message': "Please select current or future date",
+                    }
+                }
+                 
+    @api.onchange('booked_to')
+    def compute_booked_to(self):  
+        dt1=datetime.strptime(str(self.booked_from),DEFAULT_SERVER_DATE_FORMAT).date()
+        dt2=datetime.strptime(str(self.booked_to),DEFAULT_SERVER_DATE_FORMAT).date()
+        if dt2 < dt1:
+            self.booked_to = False
+            return {'warning': {
+                    'title': "Warning",
+                    'message': "Please select appropriate date",
+                    }
+                }
+ 
     
-    
-    
-  
-  
-    @api.onchange('country')
+    @api.onchange('country_id')
     def set_values_to(self):
-        if self.country:
-            return { 'domain':{'state':[('country_id','=',self.country.id)]}}
+        if self.country_id:
+            return { 'domain':{'state_id':[('country_id','=',self.country_id.id)]}}
         else:
-            return {'domain':{'state':[]}}
+            return {'domain':{'state_id':[]}}
 
 
 

@@ -18,8 +18,8 @@
    <field name="arch" type="xml">
         <tree string="Places">
            <field name="name"/>
-           <field name="country" />
-           <field name="state" />
+           <field name="country_id" />
+           <field name="state_id" />
            <field name="no_of_guests" />
            <field name="bedrooms" />
            <field name="rent"/>
@@ -38,10 +38,10 @@
             </div>
             <group col="3">
               <group>
-               <field name="country"/>
+               <field name="country_id"/>
               </group>
               <group>
-               <field name="state"/>
+               <field name="state_id"/>
               </group>
               <group>
                <field name="city"/>
@@ -87,13 +87,7 @@
                    </group>
                 </page>
                 <page string="Transportation">
-                    <field name="add_vehicle_lines">
-                     <tree editable="bottom">
-                      <field name="vehicle_name"/>
-                      <field name="capacity"/>
-                      <field name="rent"/>
-                     </tree>
-                    </field>
+                     <field name="add_vehicle_line_ids"/>
                 </page>
                 <page string="About Host">
                    <group>
@@ -113,8 +107,8 @@
     <field name="model">place.details</field>
     <field name="arch" type="xml">
         <search >
-           <field name="country"/>
-           <field name="state"/>
+           <field name="country_id"/>
+           <field name="state_id"/>
            <field name="bedrooms"/>
            <field name="bathrooms"/>
         </search>
