@@ -51,6 +51,9 @@
                <field name="landmark"/>
             </group>
             <group>
+               <field name="place_type"/>
+            </group>
+            <group>
               <group>
                <field name="booked_from"/>
               </group>

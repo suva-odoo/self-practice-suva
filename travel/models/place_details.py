@@ -29,29 +29,9 @@ class PlaceDetails(models.Model):
     booked_from=fields.Date()
     booked_to=fields.Date()
     add_vehicle_line_ids=fields.One2many('travel.transport','vehicle_id',string="Select vehicle")
-    
+    place_type=fields.Many2one('travel.place.types',string="Place Type")    
 
-    @api.onchange('booked_from')
-    def compute_booked_from(self):
-        if datetime.strptime(str(self.booked_from),DEFAULT_SERVER_DATE_FORMAT).date() <datetime.now().date():
-           self.booked_from = False
-           return {'warning': {
-                    'title': "Warning",
-                    'message': "Please select current or future date",
-                    }
-                }
-                 
-    @api.onchange('booked_to')
-    def compute_booked_to(self):  
-        dt1=datetime.strptime(str(self.booked_from),DEFAULT_SERVER_DATE_FORMAT).date()
-        dt2=datetime.strptime(str(self.booked_to),DEFAULT_SERVER_DATE_FORMAT).date()
-        if dt2 < dt1:
-            self.booked_to = False
-            return {'warning': {
-                    'title': "Warning",
-                    'message': "Please select appropriate date",
-                    }
-                }
+
  
     
     @api.onchange('country_id')

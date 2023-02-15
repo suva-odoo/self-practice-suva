@@ -8,23 +8,14 @@ class TravelBooking(models.Model):
     name=fields.Char(string="Enter Your name:")
     
     country_id=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
-    state_id=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
-    city=fields.Char()
-    place_id=fields.Many2one('place.details',string="Select Place")
+    state_id=fields.Many2one('res.country.state',string='State',help='Select State',ondelete='restrict',compute="_compute_state_id",readonly=False)
+    city=fields.Char(store=True)
+    place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False)
 
-    @api.onchange('country_id')
-    def set_values_to(self):
-        if self.country_id:
-            ids=self.env['res.country.state'].search([('country_id','=',self.country_id.id)])
-            return{
-                'domain':{'state_id':[('id','in',ids.ids)],}
-            }
-
-    @api.onchange('country_id','state_id','city')
-    def set_value_place(self):
-        if self.country_id:
-            return { 'domain':{'place_id':[('country_id','=',self.country_id.id),('state_id','=',self.state_id.id),('city','=',self.city)]}}
-    
+    @api.depends('country_id')
+    def _compute_state_id(self):
+            if self.country_id.id==self.state_id.country_id:
+                self.state_id=self.state_id
 
 
 
