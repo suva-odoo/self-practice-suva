@@ -13,20 +13,24 @@ class HostDetails(models.Model):
     email=fields.Char(required=True)
     mob=fields.Integer(required=True)
     date_of_birth=fields.Date()
-    age=fields.Integer(readonly=True)
+    age=fields.Integer(compute="_compute_age",store=True)
     image=fields.Binary(string="Upload your image")
     address=fields.Char()
     places_owned=fields.Integer(string="Places Owned",compute="_compute_places_owned")
-
+    place_ids=fields.One2many('place.details','place_id',string="Places")
+    
+    
+    @api.depends('email')
     def _compute_places_owned(self):
         for rec in self:
-            rec.places_owned=self.env['place.details'].search_count([('host_email','=',rec.email)])
+          if rec.email:
+             rec.places_owned=self.env['place.details'].search_count([('host_email','=',rec.email)])
 
-    
+       
 
      
-    @api.onchange('date_of_birth')
-    def set_age(self):
+    @api.depends('date_of_birth')
+    def _compute_age(self):
         for rec in self:
             if rec.date_of_birth:
                 dt=rec.date_of_birth

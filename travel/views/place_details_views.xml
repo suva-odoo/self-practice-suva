@@ -51,6 +51,7 @@
                <field name="landmark"/>
             </group>
             <group>
+               <field name="place_type_id"/>
                <field name="place_type"/>
             </group>
             <group>

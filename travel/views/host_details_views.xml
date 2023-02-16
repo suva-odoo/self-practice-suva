@@ -45,6 +45,11 @@
                <field name="image" widget="image" options="{'size':[200,200]}"/>
               </group>
             </group>
+            <notebook>
+            <page string="Places Owned">
+              <field name="place_ids"/>
+            </page>
+            </notebook>
         </sheet>
       </form>
     </field>

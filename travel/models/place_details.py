@@ -9,10 +9,13 @@ class PlaceDetails(models.Model):
 
     name=fields.Char(required=True)
     host_name=fields.Char()
+
+    place_id=fields.Many2one('host.details')
     host_email=fields.Char()
     description=fields.Text()
-    country_id=fields.Many2one('res.country',string='Country',required=True,help='Select Country',ondelete='restrict')
-    state_id=fields.Many2one('res.country.state',string='State',store=True,help='Select State',ondelete='restrict')
+    country_id = fields.Many2one('res.country', string='Country',store=True,ondelete="restrict")
+    state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]",store=True,ondelete="restrict")
+    
     city=fields.Char(string="City",help="Enter City",required="True")
     landmark=fields.Char(string="Any Landmark")
     rent=fields.Integer()
@@ -29,17 +32,11 @@ class PlaceDetails(models.Model):
     booked_from=fields.Date()
     booked_to=fields.Date()
     add_vehicle_line_ids=fields.One2many('travel.transport','vehicle_id',string="Select vehicle")
-    place_type=fields.Many2one('travel.place.types',string="Place Type")    
-
+    place_type_id=fields.Many2one('travel.place.types',string="Place Type")    
+    place_type=fields.Char(related="place_type_id.name",string="Place")
 
  
-    
-    @api.onchange('country_id')
-    def set_values_to(self):
-        if self.country_id:
-            return { 'domain':{'state_id':[('country_id','=',self.country_id.id)]}}
-        else:
-            return {'domain':{'state_id':[]}}
+  
 
 
 
