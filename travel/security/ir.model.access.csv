@@ -4,6 +4,7 @@ travel.access_place_details,access_place_details,travel.model_place_details,base
 travel.access_travel_booking,access_travel_booking,travel.model_travel_booking,base.group_user,1,1,1,1
 travel.access_travel_transport,access_travel_transport,travel.model_travel_transport,base.group_user,1,1,1,1
 travel.access_travel_place_types,access_travel_place_types,travel.model_travel_place_types,base.group_user,1,1,1,1
+travel.access_travel_facilites,access_travel_facilites,travel.model_travel_facilites,base.group_user,1,1,1,1
 
 
 

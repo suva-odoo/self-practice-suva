@@ -82,13 +82,10 @@
                   </group>
                 </page>
                 <page string="Facilites">
-                   <group>
-                      <field name="swim_pool"/>
-                      <field name="wifi"/>
-                      <field name="tv"/>
-                      <field name="cooking"/>
-                      <field name="washer"/>
-                   </group>
+                  
+                      
+                      <field name="facilites_ids"/>
+                  
                 </page>
                 <page string="Transportation">
                      <field name="add_vehicle_line_ids"/>

@@ -17,6 +17,7 @@
         "views/travel_booking_views.xml",
         "views/travel_transport_views.xml",
         "views/travel_place_types_views.xml",
+        "views/travel_facilites_views.xml",
         "views/place_menus.xml"
            
     ],

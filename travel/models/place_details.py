@@ -24,17 +24,13 @@ class PlaceDetails(models.Model):
     bathrooms=fields.Integer(string='Bathrooms')
     no_of_guests=fields.Integer(string='Guests')
     description=fields.Text()
-    swim_pool=fields.Boolean(string="Swimming Pool")
-    wifi=fields.Boolean(string="Wi-Fi")
-    tv=fields.Boolean(string="TV")
-    cooking=fields.Boolean(string="Cooking")
-    washer=fields.Boolean(string="Washing")
+    facilites_ids=fields.Many2many('travel.facilites')
+   
     booked_from=fields.Date()
     booked_to=fields.Date()
     add_vehicle_line_ids=fields.One2many('travel.transport','vehicle_id',string="Select vehicle")
     place_type_id=fields.Many2one('travel.place.types',string="Place Type")    
     place_type=fields.Char(related="place_type_id.name",string="Place")
-
  
   
 
