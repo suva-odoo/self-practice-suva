@@ -38,14 +38,12 @@ class TravelBooking(models.Model):
 
     )
    
-    total=fields.Float(string="Total amount to pay",compute="_compute_total")
+    total=fields.Float(string="Total amount to pay")
 
+ 
 
-    @api.depends("transportation_ids.rent","place_id.rent")
-    def _compute_total(self):
-      for record in self:
-        record.total=record.transportation_ids.rent + record.place_id.rent   
-    
+  
+
 
 
 

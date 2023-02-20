@@ -21,6 +21,8 @@
            <field name="capacity" />
            <field name="rent" />
            <field name="description" />
+           
+           <field name="status"/>
         </tree>
     </field>
 </record>
@@ -38,6 +40,8 @@
            <field name="capacity"/>
            <field name="rent"/>
            <field name="description"/>
+          <field name="place_id" attrs="{'invisible':[('place_name', '!=', False)]}" />
+           <field name="place_name"/>
          </group>
          <group>
            <field name="vehicle_image" widget="image" options="{'size':[300,300]}"/>
