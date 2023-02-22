@@ -5,7 +5,7 @@ class TravelTransport(models.Model):
     _description="Travel Transportation"
     _rec_name="vehicle_name"
 
-    vehicle_id=fields.Many2one('place.details',required=True)
+    vehicle_id=fields.Many2one('place.details',compute="compute_vehicle_id",store=True)
     vehicle_name=fields.Char(string="Vehicle Name")
     capacity=fields.Integer(string="Capacity",required=True)
     rent=fields.Float(string="Rent",required=True)
@@ -23,8 +23,14 @@ class TravelTransport(models.Model):
     )
     
 
-  
+    @api.depends('place_id')
+    def compute_vehicle_id(self):
+        for record in self:
+            if record.place_id:
+                record.vehicle_id=record.place_id
 
+            else:
+                record.place_id=record.vehicle_id
      
 
 

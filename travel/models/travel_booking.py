@@ -1,5 +1,5 @@
 from odoo import models,fields,api
-from datetime import datetime,date
+from datetime import datetime,date,time
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError,ValidationError
 
@@ -22,9 +22,11 @@ class TravelBooking(models.Model):
     no_of_guests=fields.Integer(string="Maximum Guests",related="place_id.no_of_guests")
     bathrooms=fields.Integer(string="Bathrooms",related="place_id.bathrooms")
     description=fields.Text(string="Description",related="place_id.description")
-    transportation_ids=fields.One2many(related="place_id.add_vehicle_line_ids")   
+   # transportation_ids=fields.One2many(related="place_id.add_vehicle_line_ids")   
     rent=fields.Integer(string="Place Rent",related="place_id.rent")
-
+    transportation_ids=fields.Many2one('travel.transport',domain="[('vehicle_id', '=?',place_id)]")
+    transport_capacity=fields.Integer(related="transportation_ids.capacity")
+    transport_rent=fields.Float(related="transportation_ids.rent")
     state=fields.Selection(
       selection=[
         ('inquiry','Inquiry'),
@@ -37,18 +39,43 @@ class TravelBooking(models.Model):
 
     )
    
-    total=fields.Float(string="Total amount to pay")
+    total=fields.Float(string="Total amount to pay",compute="_compute_total")
 
-    book_from=fields.Date(readonly=False)
-    book_to=fields.Date(readonly=False)
+    book_from=fields.Date()
+    book_to=fields.Date()
+        
+    @api.depends('transport_rent','rent')
+    def _compute_total(self):
+      for record in self:
+        record.total=record.rent +record.transport_rent
+
+    @api.constrains('book_from')
+    def _check_book_from(self):
+        for record in self:
+            if record.book_from < datetime.date(datetime.today()):
+               raise ValidationError("Please select appropriate date")
+
+  
     
 
-   # @api.depends('book_from')
-    #def _compute_book_from(self):
-     #   for record in self:
-      #    if record.book_from:
-       #     if datetime.strptime(str(record.book_from),"%Y-%m-%d").date() < datetime.today.date():
-        #       raise UserError("Please select appropriate date")
+            
+
+       
+          # if record.book_from:
+          #   start=record.book_from
+          #   end=time.strftime('%Y-%m-%d')
+          #   if start and end:
+          #      if start < end:
+          #       raise UserError("Error")
+          #   return True
+
+
+
+
+ 
+
+            # if datetime.strptime(str(record.book_from),"%Y-%m-%d").date() < datetime.today.date():
+            #  raise UserError("Please select appropriate date")
              
        # if dt1 < datetime.now.date():
         #   raise UserError("Please select the appropriate date")
