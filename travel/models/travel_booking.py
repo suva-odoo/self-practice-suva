@@ -12,9 +12,9 @@ class TravelBooking(models.Model):
     country_id = fields.Many2one('res.country', string='Country')
     state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]")
     
-    city=fields.Char(store=True)
-   
-    place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city','=',city)]")
+    # city=fields.Char(store=True)
+    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]")
+    place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city_id','=',city_id)]")
     place_type=fields.Char(string="Place Type",related="place_id.place_type")
     travel_facilites_ids=fields.Many2many(related="place_id.facilites_ids")    
     bedrooms=fields.Integer(string="Bedrooms",related="place_id.bedrooms")
@@ -39,15 +39,24 @@ class TravelBooking(models.Model):
 
     )
    
-    total=fields.Float(string="Total amount to pay",compute="_compute_total")
-
     book_from=fields.Date()
     book_to=fields.Date()
-        
-    @api.depends('transport_rent','rent')
+    days=fields.Integer(compute='_compute_days',store=True)  
+    total=fields.Float(string="Total amount to pay",compute="_compute_total")
+
+ 
+
+    @api.depends('book_from','book_to')
+    def _compute_days(self):
+      for record in self:
+        if record.book_from and record.book_to:
+          record.days=(record.book_to - record.book_from).days + 1
+
+
+    @api.depends('transport_rent','rent','days')
     def _compute_total(self):
       for record in self:
-        record.total=record.rent +record.transport_rent
+        record.total=(record.rent +record.transport_rent)* record.days
 
     @api.constrains('book_from')
     def _check_book_from(self):

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+  <record id="res_city_gandhinagar" model="res.city">
+     <field name="name">Gandhinagar</field>
+     <field name="zipcode">1234</field>
+    
+  </record>
+   
+
+</odoo>

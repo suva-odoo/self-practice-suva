@@ -10,6 +10,9 @@
     Description text
     """,
 
+    'depends': ['base_address_extended'],
+
+
     'data': [
         "security/ir.model.access.csv",
         "views/host_details_views.xml",
