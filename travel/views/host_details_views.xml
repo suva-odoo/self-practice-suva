@@ -55,6 +55,18 @@
     </field>
 </record>
 
+<record id="host_details_view_search" model="ir.ui.view">
+   <field name="name">host.details.search</field>
+   <field name="model">host.details</field>
+   <field name="arch" type="xml">
+       <search>
+          <field name="name" />
+          <field name="email"/>
+          <field name="places_owned" filter_domain="[('places_owned','>=',self)]"/>
+           <filter string="Places Owned" name="group_by_places_owned" context="{'group_by':'places_owned'}"/>
+        </search>
+    </field>
+</record>
 
         
 

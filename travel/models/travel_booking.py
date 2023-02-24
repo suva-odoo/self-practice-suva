@@ -9,12 +9,18 @@ class TravelBooking(models.Model):
 
     
     name=fields.Char(string="Enter Your name:")
-    country_id = fields.Many2one('res.country', string='Country')
-    state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]")
+    travel_booking_id=fields.Many2one('place.details',store=True,readonly=False,compute="_compute_travel_booking_id")
+    place_name=fields.Char(related="travel_booking_id.name")
+    
+
+    country_id = fields.Many2one('res.country', string='Country',related="travel_booking_id.country_id",readonly=False,store=True)
+    state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]",readonly=False,related="travel_booking_id.state_id",store=True)
     
     # city=fields.Char(store=True)
-    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]")
+    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]",readonly=False,related="travel_booking_id.city_id",store=True)
     place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city_id','=',city_id)]")
+    
+    
     place_type=fields.Char(string="Place Type",related="place_id.place_type")
     travel_facilites_ids=fields.Many2many(related="place_id.facilites_ids")    
     bedrooms=fields.Integer(string="Bedrooms",related="place_id.bedrooms")
@@ -38,14 +44,15 @@ class TravelBooking(models.Model):
       copy=False
 
     )
-   
-    book_from=fields.Date()
-    book_to=fields.Date()
+
+    available=fields.Boolean()   
+    book_from=fields.Date(default=date.today())
+    book_to=fields.Date(default=date.today())
     days=fields.Integer(compute='_compute_days',store=True)  
-    total=fields.Float(string="Total amount to pay",compute="_compute_total")
+    total=fields.Float(string="Total amount to pay",store=True,compute="_compute_total")
 
- 
 
+     
     @api.depends('book_from','book_to')
     def _compute_days(self):
       for record in self:
@@ -64,9 +71,28 @@ class TravelBooking(models.Model):
             if record.book_from < datetime.date(datetime.today()):
                raise ValidationError("Please select appropriate date")
 
-  
+    @api.depends('place_id')
+    def _compute_travel_booking_id(self):
+        for record in self:
+            if record.place_id:
+                record.travel_booking_id=record.place_id
+                
+
+            else:
+               record.place_id=record.travel_booking_id            
     
 
+
+    # @api.constrains('book_from','book_to')
+    # def check_date(self):
+    #    for record in self:
+    #      av=self.env['place.details'].search_count([('place_id','=',record.place_id),('book_from','=',record.book_from),('book_to','=',record.book_to)])         
+    #      record.count=av
+        #  if av:
+        #    raise UserError("You cannot book on selected date")
+   
+
+    
             
 
        

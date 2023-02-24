@@ -17,10 +17,11 @@
       <sheet>
          <group>
          <field name="name"/>
-         <field name="country_id" />
-         <field name="state_id"/>
-         <field name="city_id"/>
-         <field name="place_id"/>
+         <field name="country_id" attrs="{'invisible':[('place_id','!=',False)]}"/>
+         <field name="state_id" attrs="{'invisible':[('place_id','!=',False)]}"/>
+         <field name="city_id" attrs="{'invisible':[('place_id','!=',False)]}"/>
+         <field name="place_id" attrs="{'invisible':[('place_name', '!=', False)]}"/>
+         <field name="place_name"/>
          <field name="place_type"/>
          <field name="travel_facilites_ids" widget="many2many_tags"/>
          <field name="bedrooms"/>

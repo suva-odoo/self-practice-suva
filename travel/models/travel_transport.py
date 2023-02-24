@@ -8,7 +8,7 @@ class TravelTransport(models.Model):
     vehicle_id=fields.Many2one('place.details',compute="compute_vehicle_id",store=True)
     vehicle_name=fields.Char(string="Vehicle Name")
     capacity=fields.Integer(string="Capacity",required=True)
-    rent=fields.Float(string="Rent",required=True)
+    rent=fields.Float(string="Rent",required=True,default=0)
 
     description=fields.Text(string="Description")
     vehicle_image=fields.Image(string="Upload Vehicle Image")

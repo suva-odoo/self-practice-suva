@@ -54,14 +54,14 @@
                <field name="place_type_id"/>
                <field name="place_type"/>
             </group>
+            <!--<group>
             <group>
-              <group>
                <field name="booked_from"/>
               </group>
               <group>
               <field name="booked_to"/>
-              </group>
-            </group>
+              </group> 
+            </group> -->
             
             
             <notebook>
@@ -90,8 +90,12 @@
                 <page string="Transportation">
                      <field name="add_vehicle_line_ids"/>
                 </page>
+                <page string="Bookings">
+                     <field name="booking_ids"/>
+                </page>
                 <page string="About Host">
                    <group>
+                     <field name="host_id" attrs="{'invisible':[('host_name','!=', False)]}"/>
                      <field name="host_name"/>
                      <field name="host_email"/>
                    </group>
@@ -110,6 +114,8 @@
         <search >
            <field name="country_id"/>
            <field name="state_id"/>
+           <field name="city_id"/>
+          
            <field name="bedrooms"/>
            <field name="bathrooms"/>
         </search>

@@ -1,11 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
-  <record id="res_city_gandhinagar" model="res.city">
-     <field name="name">Gandhinagar</field>
-     <field name="zipcode">1234</field>
-    
-  </record>
-   
+  <record id="agra" model="res.city">
+     <field name="name">Agra</field>
+     <field name="zipcode">282001</field>
+     <field name="country_id" ref="base.in"/>
+     <field name="state_id" ref="base.state_in_up"/>
+   </record>
+
+
+   <record id="noida" model="res.city">
+      <field name="name">Noida</field>
+      <field name="zipcode">201301</field>
+      <field name="country_id" ref="base.in"/>
+      <field name="state_id" ref="base.state_in_up"/>
+   </record>
+
+   <record id="varanasi" model="res.city">
+      <field name="name">Varanasi</field>
+      <field name="zipcode">221001</field>
+      <field name="country_id" ref="base.in"/>
+      <field name="state_id" ref="base.state_in_up"/>
+    </record>   
+
+    <record id="lucknow" model="res.city">
+       <field name="name">Lucknow</field>
+       <field name="zipcode">226001</field>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_up"/>
+    </record>
+
+    <record id="ahmedabad" model="res.city">
+       <field name="name">Ahmedabad</field>
+       <field name="zipcode">380001</field>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_gj"/>
+    </record>
+
+
+    <record id="surat" model="res.city">
+       <field name="name">Surat</field>
+       <field name="zipcode">392150</field>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_gj"/>
+    </record>
+
+    <record id="kachchh" model="res.city">
+       <field name="name">Kachchh</field>
+       <field name="zipcode">370001</field>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_gj"/>
+    </record>
+
+
+    <record id="gandhinagar" model="res.city">
+       <field name="name">Gandhinagar</field>
+       <field name="zipcode">380060</field>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_gj"/>
+    </record>
+
+    <record id="new_york" model="res.city">
+       <field name="name">New York City</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_27"/>
+    </record>
+
+
+    <record id="los_angeles" model="res.city">
+       <field name="name">Los Angeles</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_5"/>
+    </record>
+
+
+    <record id="houston" model="res.city">
+       <field name="name">Houston</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_44"/>
+    </record>
+
+    <record id="san_diego" model="res.city">
+       <field name="name">San Diego</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_5"/>
+    </record>
+
+    <record id="phoenix" model="res.city">
+       <field name="name">Phoenix</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_3"/>
+    </record>
+
+    <record id="san_antonio" model="res.city">
+       <field name="name">San Antonio</field>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_44"/>
+    </record>
+
 
 </odoo>
