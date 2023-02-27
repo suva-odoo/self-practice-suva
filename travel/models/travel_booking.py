@@ -13,14 +13,14 @@ class TravelBooking(models.Model):
     place_name=fields.Char(related="travel_booking_id.name")
     
 
-    country_id = fields.Many2one('res.country', string='Country',related="travel_booking_id.country_id",readonly=False,store=True)
-    state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]",readonly=False,related="travel_booking_id.state_id",store=True)
+    country_id = fields.Many2one('res.country', string='Country',store=True)
+    state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]",store=True)
     
     # city=fields.Char(store=True)
-    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]",readonly=False,related="travel_booking_id.city_id",store=True)
+    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]",store=True)
     place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city_id','=',city_id)]")
     
-    
+    #place_booking=fields.Char(related="place_id.name")
     place_type=fields.Char(string="Place Type",related="place_id.place_type")
     travel_facilites_ids=fields.Many2many(related="place_id.facilites_ids")    
     bedrooms=fields.Integer(string="Bedrooms",related="place_id.bedrooms")
@@ -41,6 +41,7 @@ class TravelBooking(models.Model):
         ('cancel','Cancelled')
 
       ],
+      default="inquiry",
       copy=False
 
     )
@@ -83,13 +84,13 @@ class TravelBooking(models.Model):
     
 
 
-    # @api.constrains('book_from','book_to')
-    # def check_date(self):
-    #    for record in self:
-    #      av=self.env['place.details'].search_count([('place_id','=',record.place_id),('book_from','=',record.book_from),('book_to','=',record.book_to)])         
-    #      record.count=av
-        #  if av:
-        #    raise UserError("You cannot book on selected date")
+    @api.constrains('book_from','book_to')
+    def check_date(self):
+       for record in self:
+         av=self.env['travel.booking'].search_count([('place_name','=',record.place_name),('book_from','=',record.book_from),('book_to','=',record.book_to)])         
+        
+         if av>1:
+           raise UserError("You cannot book on selected date")
    
 
     

@@ -10,7 +10,7 @@ class PlaceDetails(models.Model):
     name=fields.Char(required=True)
     
     
- #   city_id = fields.Many2one('res.country.state.city', "CityID") 
+ #city_id = fields.Many2one('res.country.state.city', "CityID") 
  #city =  fields.Char(related='city_id.name', "City") 
   
     host_id=fields.Many2one('host.details',string="Host")
@@ -33,6 +33,14 @@ class PlaceDetails(models.Model):
     facilites_ids=fields.Many2many('travel.facilites')
 
     available=fields.Boolean()
+    
+    state=fields.Selection(string="Status",default="available",
+
+                         selection=[
+                            ('available','Available'),
+                            ('not_available','Not Available')
+                          
+                           ])
 
     add_vehicle_line_ids=fields.One2many('travel.transport','vehicle_id',string="Select vehicle")
     place_type_id=fields.Many2one('travel.place.types',string="Place Type")    
