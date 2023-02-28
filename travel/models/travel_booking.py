@@ -17,7 +17,7 @@ class TravelBooking(models.Model):
     state_id = fields.Many2one("res.country.state", string='State', domain="[('country_id', '=?', country_id)]",store=True)
     
     # city=fields.Char(store=True)
-    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', False)]",store=True)
+    city_id=fields.Many2one('res.city',domain="[('state_id', '=?', state_id)]",store=True)
     place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city_id','=',city_id)]")
     
     #place_booking=fields.Char(related="place_id.name")
@@ -87,7 +87,7 @@ class TravelBooking(models.Model):
     @api.constrains('book_from','book_to')
     def check_date(self):
        for record in self:
-         av=self.env['travel.booking'].search_count([('place_name','=',record.place_name),('book_from','=',record.book_from),('book_to','=',record.book_to)])         
+         av=self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),('|',('book_from','=',record.book_from),('book_to','=',record.book_to)),('|',('book_from','<=',record.book_to),('book_to','>=',record.book_from))])         
         
          if av>1:
            raise UserError("You cannot book on selected date")
