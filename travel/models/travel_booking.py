@@ -87,7 +87,7 @@ class TravelBooking(models.Model):
     @api.constrains('book_from','book_to')
     def check_date(self):
        for record in self:
-         av=self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),('|',('book_from','=',record.book_from),('book_to','=',record.book_to)),('|',('book_from','<=',record.book_to),('book_to','>=',record.book_from))])         
+         av=self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),'|',('book_from','=',record.book_from),('book_to','=',record.book_to),'|',('book_from','<=',record.book_to),('book_to','>=',record.book_from)])         
         
          if av>1:
            raise UserError("You cannot book on selected date")
