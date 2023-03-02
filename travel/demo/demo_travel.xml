@@ -1,0 +1,70 @@
+<odoo>
+   <record id="ac" model="travel.facilites">
+      <field name="name">Air Conditioner</field>
+   </record>
+
+   <record id="swim_pool" model="travel.facilites">
+      <field name="name">Swimming Pool</field>
+   </record>
+
+   <record id="type_raw_house" model="travel.place.types">
+        <field name="name">Raw House</field>
+
+   </record>
+   <record id="type_apartment" model="travel.place.types">
+      <field name="name">Apartment</field>
+   </record>
+
+
+   <record id="host_Surabhi" model="host.details">
+      <field name="name">Surabhi</field>
+      <field name="email">surabhi@gmail.com</field>
+      <field name="mob">1234567890</field>
+      <field name="address">Vapi,Gujarat</field>
+   </record>
+
+    <record id="host_suva" model="host.details">
+      <field name="name">SUVA</field>
+      <field name="email">suva@gmail.com</field>
+      <field name="mob">1234567890</field>
+      <field name="address">Gandhinagar,Gujarat</field>
+   </record>
+
+    <record id="place_lakeview" model="place.details">
+       <field name="name">Lake View</field>
+       <field name="host_id" ref="host_suva"/>
+       <field name="place_type_id" ref="type_apartment"/>
+       <field name="country_id" ref="base.in"/>
+       <field name="state_id" ref="base.state_in_up"/>
+       <field name="city_id" ref="lucknow"/>
+       <field name="rent">8000</field>
+       <field name="beds">4</field>
+       <field name="bedrooms">2</field>
+       <field name="bathrooms">2</field>
+       <field name="no_of_guests">8</field>
+       <field name="facilites_ids" eval="[(6,0, [ ref('swim_pool'), ref('ac')])]"/>
+       <field name="add_vehicle_line_ids" eval="[(0,0,{'vehicle_name':'Royal Enfield','capacity':2,'rent':3000,'description':'Very Comfortable'})]"/>
+
+   </record>
+
+
+
+    <record id="place_mountainview" model="place.details">
+       <field name="name">Mountain View</field>
+       <field name="host_id" ref="host_Surabhi"/>
+       <field name="place_type_id" ref="type_raw_house"/>
+       <field name="country_id" ref="base.us"/>
+       <field name="state_id" ref="base.state_us_44"/>
+       <field name="city_id" ref="houston"/>
+       <field name="rent">10000</field>
+       <field name="beds">4</field>
+       <field name="bedrooms">2</field>
+       <field name="bathrooms">2</field>
+       <field name="no_of_guests">8</field>
+       <field name="facilites_ids" eval="[(6,0, [ ref('swim_pool'), ref('ac')])]"/>
+       <field name="add_vehicle_line_ids" eval="[(0,0,{'vehicle_name':'Maruti Alto','capacity':4,'rent':1000,'description':'Very Comfortable'}),(0,0,{'vehicle_name':'Audi Q7','capacity':7,'rent':2000})]"/>
+
+   </record>
+
+
+</odoo>

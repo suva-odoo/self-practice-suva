@@ -10,7 +10,8 @@
     Description text
     """,
     'demo':[
-        "demo/demo_data.xml"
+        "demo/demo_data.xml",
+        "demo/demo_travel.xml"
     ],
 
 

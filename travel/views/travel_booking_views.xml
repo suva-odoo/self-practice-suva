@@ -12,6 +12,7 @@
    <field name="arch" type="xml">
       <tree>
           <field name="name"/>
+          <field name="place_name"/>
           <field name="total"/>
           <field name="book_from"/>
           <field name="book_to"/>
