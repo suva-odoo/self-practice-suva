@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<menuitem id="place_details_menu_root" name="Travel-Hospitality">
-   <menuitem id="profile_menu" sequence="0" name="Users">
-       <menuitem id="host_menu_action" action="host_details_action"/>
-   </menuitem>
 
-   <menuitem id="places_menu" sequence="1" name="Places">
+   <menuitem id="place_details_menu_root" name="Travel-Hospitality">
+     <menuitem id="profile_menu" sequence="0" name="Users">
+       <menuitem id="host_menu_action" action="host_details_action"/>
+     </menuitem>
+
+     <menuitem id="places_menu" sequence="1" name="Places">
        <menuitem id="place_details_menu_action" action="place_details_action" />
        <menuitem id="travel_place_types_menu_action" action="travel_place_types_action"/>
        <menuitem id="travel_facilites_menu_action" action="travel_facilites_action"/>
+     </menuitem>
+
+     <menuitem id="travel_booking_menu" sequence="2" name="Bookings" action="travel_booking_action" />
+
+     <menuitem id="travel_transport_menu" sequence="3" name="Transportation" action="travel_transport_action"/>
+
+
    </menuitem>
-
-   <menuitem id="travel_booking_menu" sequence="2" name="Bookings" action="travel_booking_action" />
-
-   <menuitem id="travel_transport_menu" sequence="3" name="Transportation" action="travel_transport_action"/>
-
-
-</menuitem>
 
 </odoo>

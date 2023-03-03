@@ -84,22 +84,13 @@ class TravelBooking(models.Model):
     
 
  
-    # @api.model
-    # def create(self,vals):
-    #     count= self.env['travel.booking'].browse(vals["place_id"])
-    #     for record in count:
-    #       if vals['book_from'] == record.book_from and vals['book_to'] == record.book_to:
-    #         breakpoint()
-    #         raise UserError("You cannot create lower offer than present offers")
-    
-    #     return super(TravelBooking,self).create(vals)
 
     @api.constrains('book_from','book_to')
     def check_date(self): 
-        for record in self:          
-            if self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),'|','|',('book_from','=',record.book_from),('book_to','=',record.book_to),'|',('book_from','=',record.book_from),('book_to','>',record.book_to),'|','&',('book_from','<=',record.book_from),('book_from','<',record.book_to),('book_to','<',record.book_to)]) > 1:
-                 raise UserError("You cannot book on selected date")
-  
+        for record in self:  
+            if self.env['travel.booking'].search_count([('place_name','=',record.place_name),'|',('book_from','=',record.book_from),('book_to','=',record.book_to)]) > 1:
+              raise UserError("You cannot book on selected date")
+
             
 # book_from = new_book_from | book_to > new _book_to
 # book_from < new_book_from | book_to = new_book_to

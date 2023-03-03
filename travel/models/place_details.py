@@ -51,6 +51,8 @@ class PlaceDetails(models.Model):
    #  booked_to=fields.Date()
     
 
+
+
     
     
   
