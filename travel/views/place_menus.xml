@@ -5,6 +5,7 @@
    <menuitem id="place_details_menu_root" name="Travel-Hospitality">
      <menuitem id="profile_menu" sequence="0" name="Users">
        <menuitem id="host_menu_action" action="host_details_action"/>
+       <menuitem id="customer_menu_action" action="customer_details_action"/>
      </menuitem>
 
      <menuitem id="places_menu" sequence="1" name="Places">

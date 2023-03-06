@@ -1,14 +1,23 @@
 from odoo import models,fields,api
-from datetime import datetime,date,time
+from datetime import datetime,date,time,timedelta
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError,ValidationError
 
 class TravelBooking(models.Model):
     _name="travel.booking"
     _description="Travel Bookings"
+    _inherit=['mail.thread','mail.activity.mixin']
+  
+
+   
+    
+    cust_id=fields.Many2one('customer.details',string="Name:",store=True)
+    mob=fields.Integer(string="Mobile No.",related="cust_id.mob")
+    address=fields.Char(string="Address",related="cust_id.address")
 
     
-    name=fields.Char(string="Enter Your name:")
+    
+    
     travel_booking_id=fields.Many2one('place.details',store=True,readonly=False,compute="_compute_travel_booking_id")
     place_name=fields.Char(related="travel_booking_id.name")
     
@@ -21,7 +30,7 @@ class TravelBooking(models.Model):
     place_id=fields.Many2one('place.details',string="Select Place",store=True,readonly=False,domain="[('country_id','=',country_id),('state_id','=',state_id),('city_id','=',city_id)]")
     
     #place_booking=fields.Char(related="place_id.name")
-    place_type=fields.Char(string="Place Type",related="place_id.place_type")
+    place_type=fields.Many2one(string="Place Type",related="place_id.place_type_id")
     travel_facilites_ids=fields.Many2many(related="place_id.facilites_ids")    
     bedrooms=fields.Integer(string="Bedrooms",related="place_id.bedrooms")
     beds=fields.Integer(string="Beds",related="place_id.beds")
@@ -42,7 +51,8 @@ class TravelBooking(models.Model):
 
       ],
       default="inquiry",
-      copy=False
+      copy=False,
+      tracking=True
 
     )
 
@@ -51,9 +61,17 @@ class TravelBooking(models.Model):
     book_to=fields.Date(default=date.today())
     days=fields.Integer(compute='_compute_days',store=True)  
     total=fields.Float(string="Total amount to pay",store=True,compute="_compute_total")
-
-
+    cust_detail_id=fields.Many2one('customer.details',compute="_compute_cust_detail_id",store=True)
+    
      
+    @api.depends('cust_id')
+    def _compute_cust_detail_id(self):
+          for record in self:
+             if record.cust_id:
+                record.cust_detail_id=record.cust_id
+             else:
+                record.cust_id=record.cust_detail_id
+
     @api.depends('book_from','book_to')
     def _compute_days(self):
       for record in self:
@@ -78,25 +96,53 @@ class TravelBooking(models.Model):
             if record.place_id:
                 record.travel_booking_id=record.place_id
                 
-
             else:
                record.place_id=record.travel_booking_id            
     
+    def action_book(self):
+     for record in self:
+        record.state="booked"
+     
+    def action_cancel(self):
+      for record in self:
+        record.state="cancel" 
 
- 
 
     @api.constrains('book_from','book_to')
     def check_date(self): 
-        for record in self:  
-            if self.env['travel.booking'].search_count([('place_name','=',record.place_name),'|',('book_from','=',record.book_from),('book_to','=',record.book_to)]) > 1:
-              raise UserError("You cannot book on selected date")
+      for rec in self:
+        for record in self.place_id.booking_ids:
+              print(record.book_from)
+              print(record.book_to)
+              print(rec.book_from)
+              d1=record.book_from
+              d2=record.book_to
+              d=d2-d1
+              for i in range(d.days+1):
+                 day=d1+timedelta(days=i)
+                 if rec.book_from == day or rec.book_to == day:
+                  print("Hello"+str(rec.book_from))
+                  print(day)
+                               
+
+
+
+    # @api.constrains('book_from','book_to')
+    # def check_date(self): 
+    #     for record in self:  
+    #         if self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),'|',('book_from','<=',record.book_to),('book_from','=',record.book_from),('book_to','=',record.book_to)])>1:
+    #           raise UserError("You cannot book on selected date")
 
             
 # book_from = new_book_from | book_to > new _book_to
 # book_from < new_book_from | book_to = new_book_to
 # book_from < new_book_from | book_to < new_book_to
 # book_from > new_book_from | book_to > new_book_from
-       
+
+
+              # if self.env['travel.booking'].search_count(['&',('place_name','=',record.place_name),'|','|',('book_from','=',record.book_from),('book_to','=',record.book_to),'|','&',('book_from','=',record.book_from),('book_to','>=',record.book_to),'|','&',('book_from','=',record.book_from),('book_to','<=',record.book_to),'&','&',('book_from','<',record.book_from),('book_to','<=',record.book_to),('book_to','>=',record.book_from)])>1:
+
+
           # if record.book_from:
           #   start=record.book_from
           #   end=time.strftime('%Y-%m-%d')

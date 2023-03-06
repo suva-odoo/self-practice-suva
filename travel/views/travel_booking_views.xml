@@ -11,8 +11,8 @@
    <field name="model">travel.booking</field>
    <field name="arch" type="xml">
       <tree>
-          <field name="name"/>
-          <field name="place_name"/>
+          <field name="cust_id"/>
+          <field name="place_id"/>
           <field name="total"/>
           <field name="book_from"/>
           <field name="book_to"/>
@@ -28,17 +28,35 @@
     <field name="arch" type="xml">
     <form>
       <header>
+          <button name="action_book" type="object" string="BOOK"/>
+          <button name="action_cancel" type="object" string="CANCEL"/>
           <field name="state" widget="statusbar" options="{'clickable':1}"/>
       </header>
       <sheet>
-         <group>
-         <field name="name"/>
-         <field name="country_id"/>
-         <field name="state_id"/>
-         <field name="city_id"/>
-         <field name="place_id" attrs="{'invisible':[('place_name', '!=', False)]}"/>
+       <group string="Customer Details">
+          <group>
+            <field name="cust_id"/>
+            <field name="mob"/>
+            <field name="address"/>
+          </group>
+        </group>
+        <group string="Select Destination" col="3">
+           <group>
+            <field name="country_id"/>
+           </group>
+           <group>
+            <field name="state_id"/>
+           </group>
+           <group>
+            <field name="city_id"/>
+           </group>
+        </group>
+       
+       <group>
+         <field name="place_id"/>
+          <!-- attrs="{'invisible':[('place_name', '!=', False)]}" -->
         <!-- <field name="place_booking"/> -->
-         <field name="place_name"/>
+         <!-- <field name="place_name"/> -->
          <field name="place_type"/>
          <field name="travel_facilites_ids" widget="many2many_tags"/>
          <field name="bedrooms"/>
@@ -48,22 +66,40 @@
          <field name="description"/>
          <field name="rent"/>
          <field name="state"/>
-       
-    
-        
          <field name="transportation_ids"/>
+
+        </group>
+        
+    
+        <group attrs="{'invisible':[('transportation_ids','==',False)]}">
          <field name="transport_capacity"/>
          <field name="transport_rent"/>
-     
+        </group>
          
-         
-         <field name="total"/>
+        <group string="Select Duration" col="3">
+        <group>
          <field name="book_from" widget="daterange" options="{'related_end_date':'book_to'}"/>
+        </group>
+        <group>
          <field name="book_to" widget="daterange" options="{'related_start_date':'book_from'}"/>
+        </group>
+        <group>
          <field name="days"/>
+        </group>
+        </group>
+        <group string="Total Amount to Pay">
+        <field name="total"/>
+        </group>
 
-         </group>
+
+         
       </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids" />
+          <field name="message_ids" />
+          <field name="activity_ids" />
+        </div>
+
     </form>
     </field>
 </record>

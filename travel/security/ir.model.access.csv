@@ -5,6 +5,7 @@ travel.access_travel_booking,access_travel_booking,travel.model_travel_booking,b
 travel.access_travel_transport,access_travel_transport,travel.model_travel_transport,base.group_user,1,1,1,1
 travel.access_travel_place_types,access_travel_place_types,travel.model_travel_place_types,base.group_user,1,1,1,1
 travel.access_travel_facilites,access_travel_facilites,travel.model_travel_facilites,base.group_user,1,1,1,1
+travel.access_customer_details,access_customer_details,travel.model_customer_details,base.group_user,1,1,1,1
 
 
 

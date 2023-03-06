@@ -1,7 +1,7 @@
 {
     'name': "Travel & Hospitality",
     'version': '1.0',
-    'depends': ['base','base_address_extended'],
+    'depends': ['base','base_address_extended','mail'],
     'author': "Surabhi Varma",
     'category': 'Category',
      'license': 'LGPL-3',
@@ -18,6 +18,7 @@
     'data': [
         "security/ir.model.access.csv",
         "views/place_details_views.xml",
+        "views/customer_details_views.xml",
         "views/host_details_views.xml",
         "views/travel_booking_views.xml",
         "views/travel_transport_views.xml",
