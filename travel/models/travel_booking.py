@@ -57,8 +57,8 @@ class TravelBooking(models.Model):
     )
 
     available=fields.Boolean()   
-    book_from=fields.Date(default=date.today())
-    book_to=fields.Date(default=date.today())
+    book_from=fields.Date()
+    book_to=fields.Date()
     days=fields.Integer(compute='_compute_days',store=True)  
     total=fields.Float(string="Total amount to pay",store=True,compute="_compute_total")
     cust_detail_id=fields.Many2one('customer.details',compute="_compute_cust_detail_id",store=True)
@@ -107,23 +107,40 @@ class TravelBooking(models.Model):
       for record in self:
         record.state="cancel" 
 
+    
+
+
+
 
     @api.constrains('book_from','book_to')
-    def check_date(self): 
-      for rec in self:
-        for record in self.place_id.booking_ids:
-              print(record.book_from)
-              print(record.book_to)
-              print(rec.book_from)
+    def check_date(self):
+        count=1
+        for rec in self:
+          for record in self.place_id.booking_ids:
+              count=count+1
+              v=len(self.place_id.booking_ids)-1
               d1=record.book_from
               d2=record.book_to
               d=d2-d1
               for i in range(d.days+1):
-                 day=d1+timedelta(days=i)
-                 if rec.book_from == day or rec.book_to == day:
-                  print("Hello"+str(rec.book_from))
-                  print(day)
+               day=d1+timedelta(days=i)
+               if count <= v and (rec.book_from == day or rec.book_to == day):
+                 raise UserError("Error")
+
+
+
+   
+    
+                  # print("Hello rec.book_from"+str(rec.book_from))
+                  # print("World rec.book_to"+str(rec.book_to))
+                  # print("Days:" +str(day))
                                
+
+
+    
+
+
+
 
 
 

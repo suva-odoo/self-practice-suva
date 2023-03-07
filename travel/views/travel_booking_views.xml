@@ -56,7 +56,7 @@
          <field name="place_id"/>
           <!-- attrs="{'invisible':[('place_name', '!=', False)]}" -->
         <!-- <field name="place_booking"/> -->
-         <!-- <field name="place_name"/> -->
+         <field name="place_name" invisible="1"/>
          <field name="place_type"/>
          <field name="travel_facilites_ids" widget="many2many_tags"/>
          <field name="bedrooms"/>
