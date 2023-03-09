@@ -12,7 +12,7 @@ class TravelBookingAccount(models.Model):
                  "line_ids":[
                     (0,0,
                      {
-                        'name':record.name,
+                        'name':record.cust_id.name,
                         'price_unit':record.total,
     
                      })
