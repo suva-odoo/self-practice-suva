@@ -110,22 +110,38 @@ class TravelBooking(models.Model):
     
 
 
+    @api.model
+    def create(self,vals):
+          count= self.env['place.details'].browse(vals["place_id"])
+          for c in count.booking_ids:
+             book_from=c.book_from
+             book_to=c.book_to
+             d=book_from - book_to
+             
+             for i in range(d.days+1):
+                day=book_from+timedelta(days=i)
+                if vals['book_from'] == day or vals["book_to"] == day:
+                   raise UserError("You cannot book on selcted date")
+                
+    
+          return super(TravelBooking,self).create(vals)
+       
+        # count= self.env['estate.property'].browse(vals["property_id"])
 
-
-    @api.constrains('book_from','book_to')
-    def check_date(self):
-        count=1
-        for rec in self:
-          for record in self.place_id.booking_ids:
-              count=count+1
-              v=len(self.place_id.booking_ids)-1
-              d1=record.book_from
-              d2=record.book_to
-              d=d2-d1
-              for i in range(d.days+1):
-               day=d1+timedelta(days=i)
-               if count <= v and (rec.book_from == day or rec.book_to == day):
-                 raise UserError("Error")
+    # @api.constrains('book_from','book_to')
+    # def check_date(self):
+    #     count=1
+    #     for rec in self:
+    #       for record in self.place_id.booking_ids:
+    #           count=count+1
+    #           v=len(self.place_id.booking_ids)-1
+    #           d1=record.book_from
+    #           d2=record.book_to
+    #           d=d2-d1
+    #           for i in range(d.days+1):
+    #            day=d1+timedelta(days=i)
+    #            if count <= v and (rec.book_from == day or rec.book_to == day):
+    #              raise UserError("Error")
 
 
 
